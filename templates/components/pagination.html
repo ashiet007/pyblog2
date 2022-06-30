@@ -1,0 +1,41 @@
+<div class="p-4 bg-light mb-5">
+  <div class="row gy-2">
+    {% if page_obj.has_previous %}
+    <div class="col-sm-4 text-center text-sm-start">
+      <a
+        class="btn btn-outline-secondary btn-sm"
+        href="?page={{ page_obj.previous_page_number }}"
+        ><i class="fas fa-angle-left me-2"></i>Prev</a
+      >
+    </div>
+    {% else %}
+    <div class="col-sm-4 text-center text-sm-start">
+      <a
+        class="btn btn-outline-secondary btn-sm disabled"
+        href="javascript:void(0)"
+        ><i class="fas fa-angle-left me-2"></i>Prev</a
+      >
+    </div>
+    {% endif %}
+    <div class="col-sm-4 text-center">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </div>
+    {% if page_obj.has_next %}
+    <div class="col-sm-4 text-center text-sm-end">
+      <a
+        class="btn btn-outline-secondary btn-sm"
+        href="?page={{ page_obj.next_page_number }}"
+        >Next<i class="fas fa-angle-right ms-2"></i
+      ></a>
+    </div>
+    {% else %}
+    <div class="col-sm-4 text-center text-sm-end">
+      <a
+        class="btn btn-outline-secondary btn-sm disabled"
+        href="javascript:void(0)"
+        >Next<i class="fas fa-angle-right ms-2"></i
+      ></a>
+    </div>
+    {% endif %}
+  </div>
+</div>

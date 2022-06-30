@@ -1,0 +1,118 @@
+<!--Extend layout -->
+{% extends 'layout/base.html' %}
+
+<!-- For static files -->
+{% load static %}
+
+<!-- Include Page title-->
+{% block title %} Travel blog | Register {% endblock %}
+
+<!-- Main Content-->
+{% block content %}
+<section
+  class="hero bg-center bg-cover"
+  style="background: url('{% static "img/hero-banner.jpg" %}')"
+>
+  <div class="dark-overlay py-5">
+    <div class="overlay-content">
+      <div class="container py-5 text-white text-center">
+        <h1>Register</h1>
+        <p>
+          Register to get started.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="pt-5">
+  <div class="container pt-5">
+    <div class="row mb-5">
+      <h3 class="h4 mb-4">Register</h3>
+      {% for message in messages %}
+        <div class="alert alert-error">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+              {{ message }}
+        </div>
+      {% endfor %}
+      {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          <a class="close" href="#" data-dismiss="alert">×</a>
+          {% for field in form %}
+            {% for error in field.errors %}
+              {{ error }}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <form class="mb-5" id="registerForm" action="{% url 'register' %}" method="POST" data-parsley-validate>
+        {% csrf_token %}
+        <div class="row gy-3">
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="text"
+              name="first_name"
+              placeholder="First Name"
+              required
+            />
+          </div>
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="text"
+              name="last_name"
+              placeholder="Last Name"
+              required
+            />
+          </div>
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="email"
+              name="email"
+              placeholder="Email Address e.g. Jason@email.com"
+              required
+            />
+          </div>
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="password"
+              name="password1"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="password"
+              name="password2"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
+          <div class="col-lg-12">
+            <button class="btn btn-dark" type="submit">Register</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $("#registerForm").parsley();
+</script>
+{% endblock %}

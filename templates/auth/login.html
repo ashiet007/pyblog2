@@ -1,0 +1,66 @@
+<!--Extend layout -->
+{% extends 'layout/base.html' %}
+
+<!-- For static files -->
+{% load static %}
+
+<!-- Include Page title-->
+{% block title %} Travel Blog | Login {% endblock %}
+
+<!-- Main Content-->
+{% block content %}
+<section
+  class="hero bg-center bg-cover"
+  style="background: url('{% static "img/hero-banner.jpg" %}')"
+>
+  <div class="dark-overlay py-5">
+    <div class="overlay-content">
+      <div class="container py-5 text-white text-center">
+        <h1>Login</h1>
+        <p>
+          Login to get started.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="pt-5">
+  <div class="container pt-5">
+    <div class="row mb-5">
+      <h3 class="h4 mb-4">Login</h3>
+      {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error!</strong> {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+      <form class="mb-5" action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="row gy-3">
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="email"
+              name="email"
+              placeholder="Email Address e.g. Jason@email.com"
+              required
+            />
+          </div>
+          <div class="col-lg-8">
+            <input
+              class="form-control"
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="col-lg-12">
+            <button class="btn btn-dark" type="submit">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

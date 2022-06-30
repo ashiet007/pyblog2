@@ -1,0 +1,54 @@
+<div
+  class="modal fade"
+  id="replyModal"
+  tabindex="-1"
+  aria-labelledby="replyModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="replyModalLabel">Post your reply</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="mb-5"
+          id="replyForm"
+          action="{% url 'post_comment' %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <div class="row gy-3">
+            <input type="hidden" name="parent_id" />
+            <input type="hidden" name="post_id" value="{{post.id}}" />
+            <div class="col-lg-12">
+              <textarea
+                class="form-control"
+                name="user_comment"
+                rows="5"
+                placeholder="Leave your message"
+                required
+              ></textarea>
+            </div>
+            <div class="col-lg-12">
+              <button class="btn btn-dark" type="submit">
+                Submit your reply
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

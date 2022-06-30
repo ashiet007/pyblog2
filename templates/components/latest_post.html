@@ -1,0 +1,28 @@
+{% load static %}
+<div class="mb-5">
+  <h3 class="h5">Latest posts</h3>
+  <p class="text-sm text-muted mb-4">
+    Lorem ipsum dolor sit, consectetur adipisicing elit, sed do eiusmod.
+  </p>
+  <ul class="list-unstyled">
+    {% for post in latest_posts %}
+    <li class="d-flex mb-1">
+      <a href="{% url 'post_detail' post.slug %}"
+        ><img
+          src="{{post.image.url}}"
+          alt=""
+          width="80"
+      /></a>
+      <div class="media-body ms-3">
+        <p class="small text-primary text-uppercase mb-0">{{post.created_at|date:'d M Y'}}</p>
+        <h6 class="mb-1">
+          <a class="reset-anchor" href="{% url 'post_detail' post.slug %}">{{post.title}}</a>
+        </h6>
+        <p class="small text-muted">
+          {{post.content|safe|slice:':50'}}...
+        </p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

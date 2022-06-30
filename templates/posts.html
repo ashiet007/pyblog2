@@ -1,0 +1,86 @@
+{% extends 'layout/base.html' %} {% load static %} {% block title %} Travel blog
+{% endblock %} {% block content %}
+<!-- Hero section -->
+<section
+  class="hero bg-center bg-cover"
+  style="background: url('{% static "img/hero-banner.jpg" %}')"
+>
+  <div class="dark-overlay py-5">
+    <div class="overlay-content">
+      <div class="container py-5 text-white text-center">
+        <h1>Blog listing</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Blog listing -->
+<section class="pt-5">
+  <div class="container pt-5">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <div class="row text-center">
+          {% if page_obj %}
+            {% for post in page_obj %}
+            <div class="col-lg-6 mb-5">
+              <a href="{% url 'post_detail' post.slug %}"
+                ><img
+                  class="img-fluid mb-4"
+                  src="media/{{ post.image }}"
+                  alt=""
+              /></a>
+              <ul class="list-inline small text-uppercase mb-0">
+                <li class="list-inline-item me-0 text-gray align-middle">By</li>
+                <li class="list-inline-item align-middle me-0">
+                  <a class="fw-bold reset-anchor" href="#!">{{ post.user.first_name }} {{post.user.last_name}}</a>
+                </li>
+                <li class="list-inline-item text-gray align-middle me-0">|</li>
+                <li class="list-inline-item text-gray align-middle">
+                  {{post.created_at|date:"D, d M, Y"}}
+                </li>
+              </ul>
+              <h3 class="h4 mt-2">
+                <a class="reset-anchor" href="{% url 'post_detail' post.slug %}">{{post.title}}</a>
+              </h3>
+              <a
+                class="reset-anchor text-gray text-uppercase small mb-2 d-block"
+                href="#!"
+                >{{post.category.title}}</a
+              >
+              <p class="text-small mb-1">
+                {{post.content|slice:':155'|safe}}...
+              </p>
+              <a class="btn btn-link" href="{% url 'post_detail' post.slug %}">Continue reading</a>
+            </div>
+            {% endfor %}
+          {% else %}
+            <p>No blogs found</p>
+          {% endif %}  
+        </div>
+        <!-- Listing navigation -->
+        {% include 'components/pagination.html' with page_obj=page_obj %}
+      </div>
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- About me widget -->
+        {% include 'components/about_me.html' %}
+
+        <!-- Categories widget -->
+        {% include 'components/categories.html' with categories=categories %}
+
+        <!-- Newsletter widget -->
+        {% include 'components/newsletter.html' %}
+
+        <!-- Latest posts widget -->
+        {% include 'components/latest_post.html' with latest_post=latest_posts %}
+
+        <!-- Instagram widget -->
+        {% include 'components/instagram.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

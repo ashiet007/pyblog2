@@ -1,0 +1,11 @@
+<div class="mb-5 text-center">
+  {% for category in categories %}
+  <a
+    class="category reset-anchor bg-cover bg-center mb-2"
+    href="{% url 'posts' %}?category={{category.slug}}"
+    style="background: url('{{category.image.url}}')"
+  >
+    <p class="category-title text-uppercase small">{{category.title}}</p></a
+  >
+  {% endfor %}
+</div>

@@ -1,0 +1,11 @@
+<div class="p-4 bg-light mb-5">
+  <ul class="list-inline mb-0">
+    {% for tag in tags %}
+    <li class="list-inline-item me-2 pe-lg-2">
+      <a class="tag reset-anchor" href="#"
+        ><i class="fas fa-bookmark text-primary me-2"></i>{{tag.title}}</a
+      >
+    </li>
+    {% endfor %}
+  </ul>
+</div>

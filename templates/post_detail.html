@@ -1,0 +1,93 @@
+<!--Extend layout -->
+{% extends 'layout/base.html' %}
+
+<!-- For static files -->
+{% load static %}
+
+<!-- Include Page title-->
+{% block title %} Travel blog {% endblock %}
+
+<!-- Main Content-->
+{% block content %}
+<section class="py-5">
+  <div class="container text-center">
+    <p class="h6 mb-0 text-uppercase text-primary">{{post.category.title}}</p>
+    <h1>{{post.title}}</h1>
+    <ul class="list-inline small text-uppercase mb-0">
+      <li class="list-inline-item align-middle">
+        <img
+          class="rounded-circle shadow-sm"
+          src="{% static 'img/person-1.jpg' %}"
+          alt=""
+          width="40"
+        />
+      </li>
+      <li class="list-inline-item me-0 text-muted align-middle">By</li>
+      <li class="list-inline-item align-middle me-0">
+        <a class="fw-bold reset-anchor" href="#!"
+          >{{post.user.first_name}} {{post.user.last_name}}</a
+        >
+      </li>
+      <li class="list-inline-item text-muted align-middle me-0">|</li>
+      <li class="list-inline-item text-muted align-middle me-0">
+        {{post.created_at|date:'D, d M, Y'}}
+      </li>
+      <li class="list-inline-item text-muted align-middle me-0">|</li>
+      <li class="list-inline-item text-muted align-middle">
+        {{all_comments}} Comments
+      </li>
+    </ul>
+  </div>
+  <img class="w-100 py-5" src="{{ post.image.url }}" alt="" />
+  <div class="container">
+    <div class="row gy-5">
+      <div class="col-lg-8">
+        {{post.content|safe}}
+        <!-- Tags widget-->
+        {% include 'components/tags.html' with tags=tags %}
+        <!-- Share post widget-->
+        {% include 'components/share_post.html' %}
+        <!-- Include post comment -->
+        {% include 'components/post_comment.html' with post=post %}
+        <!-- Include comments -->
+        <h3 class="h4 mb-4 d-flex align-items-center">
+          <span>Comments</span><span class="text-sm ms-3 text-gray"> {{all_comments}} Comments</span>
+        </h3>
+        {% if comments %}
+        <ul class="list-unstyled comments">
+          {% for comment in comments %}
+            {% include 'components/comments.html' with comment=comment post=post %}
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No comments yet. Be the first one to comment on this post.</p>
+        {% endif %}
+      </div>
+      <div class="col-lg-4">
+        <!-- About me widget -->
+        {% include 'components/about_me.html' %}
+        <!-- Categories widget -->
+        {% include 'components/categories.html' with categories=categories %}
+        <!-- Newsletter widget -->
+        {% include 'components/newsletter.html' %}
+        <!-- Latest posts widget -->
+        {% include 'components/latest_post.html' with latest_post=latest_posts %}
+        <!-- Instagram widget -->
+        {% include 'components/instagram.html' %}
+      </div>
+    </div>
+  </div>
+  {% include 'components/reply_modal.html' with post=post %}
+</section>
+{% endblock %} {% block scripts %}
+<script>
+  $("#postComment").parsley();
+  $("#replyForm").parsley();
+  //Post reply
+  $("body").on("click", ".postReply", function () {
+    const replyModal = $("#replyModal");
+    replyModal.find('input[name="parent_id"]').val($(this).data("comment-id"));
+    replyModal.modal("show");
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'layout/base.html' %} {% load static %} {% block title %} Travel blog
+{% endblock %} {% block content %}
+<!-- Hero section -->
+<section
+  class="hero bg-center bg-cover"
+  style="background: url('{% static "img/hero-banner.jpg" %}')"
+>
+  <div class="dark-overlay py-5">
+    <div class="overlay-content">
+      <div class="container py-5 text-white text-center">
+        <h1>Categories listing</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Blog listing -->
+<section class="pt-5">
+  <div class="container pt-5">
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <div class="row text-center">
+          {% if page_obj %}
+            <div class="col-lg-12 mb-5">
+              <div class="mb-5 text-center">
+                {% for category in page_obj %}
+                <a
+                  class="category reset-anchor bg-cover bg-center mb-2"
+                  href="{% url 'posts' %}?category={{category.slug}}"
+                  style="background: url('{{category.image.url}}')"
+                >
+                  <p class="category-title text-uppercase small">{{category.title}}</p></a
+                >
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <p>No categories found</p>
+          {% endif %}  
+        </div>
+        <!-- Listing navigation -->
+        {% include 'components/pagination.html' with page_obj=page_obj %}
+      </div>
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- About me widget -->
+        {% include 'components/about_me.html' %}
+
+        <!-- Newsletter widget -->
+        {% include 'components/newsletter.html' %}
+
+        <!-- Latest posts widget -->
+        {% include 'components/latest_post.html' with latest_post=latest_posts %}
+
+        <!-- Instagram widget -->
+        {% include 'components/instagram.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
